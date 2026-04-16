@@ -84,4 +84,28 @@ vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename symbol' }
 --   require('fff').live_grep({ query = vim.fn.expand("<cword>") })  
 -- end, { desc = 'Search current word' })
 
+local Terminal = require('toggleterm.terminal').Terminal
+
+local horizontal = Terminal:new({ id = 1, display_name = 'horizontal', direction = 'horizontal' })
+local vertical   = Terminal:new({ id = 2, display_name = 'vertical',   direction = 'vertical' })
+local float      = Terminal:new({ id = 3, display_name = 'float',      direction = 'float' })
+
+vim.keymap.set('n', '<leader>th', function() horizontal:toggle() end, { desc = 'Toggle horizontal terminal' })
+vim.keymap.set('n', '<leader>tv', function() vertical:toggle()   end, { desc = 'Toggle vertical terminal' })
+vim.keymap.set('n', '<leader>tf', function() float:toggle()      end, { desc = 'Toggle float terminal' })
+
+-- Cycle through open terminals (if you have several open)
+vim.keymap.set('n', '<leader>t]', ':ToggleTermToggleAll<CR>',          { desc = 'Toggle all terminals' })
+vim.keymap.set('n', '<leader>1',  '<cmd>1ToggleTerm<CR>',              { desc = 'Terminal 1' })
+vim.keymap.set('n', '<leader>2',  '<cmd>2ToggleTerm<CR>',              { desc = 'Terminal 2' })
+vim.keymap.set('n', '<leader>3',  '<cmd>3ToggleTerm<CR>',              { desc = 'Terminal 3' })
+
+vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+
+-- Navigate out of any terminal split without closing it
+vim.keymap.set('t', '<C-h>', '<C-\\><C-n><C-w>h')
+vim.keymap.set('t', '<C-l>', '<C-\\><C-n><C-w>l')
+vim.keymap.set('t', '<C-k>', '<C-\\><C-n><C-w>k')
+vim.keymap.set('t', '<C-j>', '<C-\\><C-n><C-w>j')
+
 

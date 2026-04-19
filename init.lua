@@ -94,18 +94,15 @@ vim.keymap.set('n', '<leader>th', function() horizontal:toggle() end, { desc = '
 vim.keymap.set('n', '<leader>tv', function() vertical:toggle()   end, { desc = 'Toggle vertical terminal' })
 vim.keymap.set('n', '<leader>tf', function() float:toggle()      end, { desc = 'Toggle float terminal' })
 
--- Cycle through open terminals (if you have several open)
-vim.keymap.set('n', '<leader>t]', ':ToggleTermToggleAll<CR>',          { desc = 'Toggle all terminals' })
-vim.keymap.set('n', '<leader>1',  '<cmd>1ToggleTerm<CR>',              { desc = 'Terminal 1' })
-vim.keymap.set('n', '<leader>2',  '<cmd>2ToggleTerm<CR>',              { desc = 'Terminal 2' })
-vim.keymap.set('n', '<leader>3',  '<cmd>3ToggleTerm<CR>',              { desc = 'Terminal 3' })
+require('mini.pairs').setup()
+require("ibl").setup()
+vim.keymap.set('n', "<C-u>", "<C-u>zz")
+vim.keymap.set('n', "<C-d>", "<C-d>zz")
 
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-
--- Navigate out of any terminal split without closing it
-vim.keymap.set('t', '<C-h>', '<C-\\><C-n><C-w>h')
-vim.keymap.set('t', '<C-l>', '<C-\\><C-n><C-w>l')
-vim.keymap.set('t', '<C-k>', '<C-\\><C-n><C-w>k')
-vim.keymap.set('t', '<C-j>', '<C-\\><C-n><C-w>j')
-
-
+config = function()  
+  require('ufo').setup({  
+    provider_selector = function(bufnr, filetype, buftype)  
+      return {'treesitter', 'indent'}  
+    end  
+  })  
+end

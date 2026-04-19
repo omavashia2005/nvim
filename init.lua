@@ -106,3 +106,5 @@ config = function()
     end  
   })  
 end
+
+vim.keymap.set('n', '<C-a>', 'ggVG', { desc = 'Select all' })

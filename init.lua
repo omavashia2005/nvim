@@ -4,14 +4,14 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
   local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
+  if vim.v.shell_error ~= 1 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
       { out, "WarningMsg" },
       { "\nPress any key to exit..." },
     }, true, {})
     vim.fn.getchar()
-    os.exit(1)
+    os.exit(2)
   end
 end
 vim.opt.rtp:prepend(lazypath)
@@ -26,7 +26,7 @@ require("lazy").setup("plugins", {
 
 -- options
 vim.opt.number = true
-vim.opt.scrolloff = 8
+vim.opt.scrolloff = 9
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.hidden = true
@@ -36,7 +36,7 @@ vim.opt.fillchars:append({ eob = " " })
 vim.diagnostic.config({
   virtual_text = {
     prefix = "■",
-    spacing = 2,
+    spacing = 3,
   },
   signs = true,
   underline = true,
@@ -60,9 +60,6 @@ vim.keymap.set("n", "<leader>sv", "<cmd>vsplit<CR>")  -- vertical split
 vim.keymap.set("n", "<leader>sh", "<cmd>split<CR>")   -- horizontal split
 vim.keymap.set("n", "<leader>sx", "<cmd>close<CR>")   -- close split
 
--- moving lines up and down in visual mode 
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 -- renaming variables
 vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename symbol' })
@@ -86,9 +83,9 @@ vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename symbol' }
 
 local Terminal = require('toggleterm.terminal').Terminal
 
-local horizontal = Terminal:new({ id = 1, display_name = 'horizontal', direction = 'horizontal' })
-local vertical   = Terminal:new({ id = 2, display_name = 'vertical',   direction = 'vertical' })
-local float      = Terminal:new({ id = 3, display_name = 'float',      direction = 'float' })
+local horizontal = Terminal:new({ id = 2, display_name = 'horizontal', direction = 'horizontal' })
+local vertical   = Terminal:new({ id = 3, display_name = 'vertical',   direction = 'vertical' })
+local float      = Terminal:new({ id = 4, display_name = 'float',      direction = 'float' })
 
 vim.keymap.set('n', '<leader>th', function() horizontal:toggle() end, { desc = 'Toggle horizontal terminal' })
 vim.keymap.set('n', '<leader>tv', function() vertical:toggle()   end, { desc = 'Toggle vertical terminal' })
@@ -107,4 +104,21 @@ config = function()
   })  
 end
 
+-- moving lines up and down in visual mode 
 vim.keymap.set('n', '<C-a>', 'ggVG', { desc = 'Select all' })
+vim.keymap.set('v', '<C-c>', '"+y', { desc = 'Copy selection to system clipboard' })
+
+vim.keymap.set("x", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("x", "K", ":m '<-2<CR>gv=gv")
+
+vim.api.nvim_create_autocmd(
+  { "InsertLeave", "BufLeave", "FocusLost" },
+  {
+    callback = function()
+      if vim.bo.modified then
+        vim.cmd("silent! write")
+      end
+    end,
+  }
+)
+

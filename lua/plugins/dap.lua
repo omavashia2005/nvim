@@ -33,10 +33,10 @@ return {
 
       -- keymaps
       vim.keymap.set("n", "<F5>", dap.continue)
-	vim.keymap.set("n", "<F6>", dap.step_over)
-	vim.keymap.set("n", "<F7>", dap.step_into)
-	vim.keymap.set("n", "<F8>", dap.step_out)
-	vim.keymap.set("n", "<leader>b", dap.set_breakpoint)
+      vim.keymap.set("n", "<F6>", dap.step_over)
+      vim.keymap.set("n", "<F7>", dap.step_into)
+      vim.keymap.set("n", "<F8>", dap.step_out)
+      vim.keymap.set("n", "<leader>b", dap.set_breakpoint)
       vim.keymap.set("n", "<leader>B", function()
         dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
       end)
@@ -73,6 +73,11 @@ return {
           end,
           cwd = "${workspaceFolder}",
           stopOnEntry = false,
+          stdio = function()
+            local input = vim.fn.input("Stdin file (leave blank for none): ", vim.fn.getcwd() .. "/", "file")
+            if input == "" then return nil end
+            return { input, nil, nil }
+          end,
         },
       }
       dap.configurations.c = dap.configurations.cpp

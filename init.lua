@@ -110,15 +110,3 @@ vim.keymap.set('v', '<C-c>', '"+y', { desc = 'Copy selection to system clipboard
 
 vim.keymap.set("x", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("x", "K", ":m '<-2<CR>gv=gv")
-
-vim.api.nvim_create_autocmd(
-  { "InsertLeave", "BufLeave", "FocusLost" },
-  {
-    callback = function()
-      if vim.bo.modified then
-        vim.cmd("silent! write")
-      end
-    end,
-  }
-)
-

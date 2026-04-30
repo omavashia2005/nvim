@@ -64,22 +64,6 @@ vim.keymap.set("n", "<leader>sx", "<cmd>close<CR>")   -- close split
 -- renaming variables
 vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename symbol' })
 
--- for fff 
--- vim.keymap.set('n', 'ff', function() require('fff').find_files() end, { desc = 'FFFind files' })  
--- vim.keymap.set('n', 'fg', function() require('fff').live_grep() end, { desc = 'LiFFFe grep' })  
--- 
--- vim.keymap.set('n', 'fz', function()  
---   require('fff').live_grep({  
---     grep = {  
---       modes = { 'fuzzy', 'plain' }  
---     }  
---   })  
--- end, { desc = 'Live fffuzy grep' })  
--- 
--- 
--- vim.keymap.set('n', 'fc', function()  
---   require('fff').live_grep({ query = vim.fn.expand("<cword>") })  
--- end, { desc = 'Search current word' })
 
 local Terminal = require('toggleterm.terminal').Terminal
 
@@ -104,10 +88,10 @@ config = function()
   })  
 end
 
--- moving lines up and down in visual mode 
 vim.keymap.set('n', '<C-a>', 'ggVG', { desc = 'Select all' })
 vim.keymap.set('v', '<C-c>', '"+y', { desc = 'Copy selection to system clipboard' })
 
+-- moving lines up and down in visual mode 
 vim.keymap.set("x", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("x", "K", ":m '<-2<CR>gv=gv")
 

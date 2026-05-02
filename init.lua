@@ -27,7 +27,7 @@ require("lazy").setup("plugins", {
 
 -- options
 vim.opt.number = true
-vim.opt.scrolloff = 9
+vim.opt.scrolloff = 8
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.hidden = true
@@ -90,10 +90,13 @@ config = function()
 end
 
 vim.keymap.set('n', '<C-a>', 'ggVG', { desc = 'Select all' })
-vim.keymap.set('v', '<C-c>', '"+y', { desc = 'Copy selection to system clipboard' })
+-- vim.keymap.set('v', '<C-c>', '"+y', { desc = 'Copy selection to system clipboard' })
 
 -- moving lines up and down in visual mode 
 vim.keymap.set("x", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("x", "K", ":m '<-2<CR>gv=gv")
 
 require('neoscroll').setup({ mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>'} })
+
+-- vim.opt.number = true
+vim.opt.relativenumber = true

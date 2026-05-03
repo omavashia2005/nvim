@@ -92,6 +92,9 @@ end
 vim.keymap.set('n', '<C-a>', 'ggVG', { desc = 'Select all' })
 -- vim.keymap.set('v', '<C-c>', '"+y', { desc = 'Copy selection to system clipboard' })
 
+vim.keymap.set({"n", "v"}, "y", '"+y')
+vim.keymap.set("n", "yy", '"+yy')
+
 -- moving lines up and down in visual mode 
 vim.keymap.set("x", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("x", "K", ":m '<-2<CR>gv=gv")
@@ -100,3 +103,16 @@ require('neoscroll').setup({ mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>'} })
 
 -- vim.opt.number = true
 vim.opt.relativenumber = true
+
+-- lol 
+-- Disable arrow keys in Normal, Visual, and Select modes
+vim.keymap.set({ 'n', 'v', 'x' }, '<Up>', '<nop>')
+vim.keymap.set({ 'n', 'v', 'x' }, '<Down>', '<nop>')
+vim.keymap.set({ 'n', 'v', 'x' }, '<Left>', '<nop>')
+vim.keymap.set({ 'n', 'v', 'x' }, '<Right>', '<nop>')
+
+-- Also disable in Insert mode (optional, but recommended for learning)
+vim.keymap.set('i', '<Up>', '<nop>')
+vim.keymap.set('i', '<Down>', '<nop>')
+vim.keymap.set('i', '<Left>', '<nop>')
+vim.keymap.set('i', '<Right>', '<nop>')

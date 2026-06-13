@@ -76,7 +76,7 @@ return {
           stdio = function()
             local input = vim.fn.input("Stdin file (leave blank for none): ", vim.fn.getcwd() .. "/", "file")
             if input == "" then return nil end
-            return { input, nil, nil }
+            return { input, vim.NIL, vim.NIL }
           end,
         },
       }

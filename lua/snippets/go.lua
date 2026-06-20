@@ -7,7 +7,6 @@ local d = ls.dynamic_node
 local c = ls.choice_node
 local snippet_from_nodes = ls.sn
 
-local ts_locals = require "nvim-treesitter.locals"
 local ts_utils = require "nvim-treesitter.ts_utils"
 local get_node_text = vim.treesitter.get_node_text
 
@@ -85,7 +84,6 @@ local handlers = {
 -- Adapted from https://github.com/tjdevries/config_manager/blob/1a93f03dfe254b5332b176ae8ec926e69a5d9805/xdg_config/nvim/lua/tj/snips/ft/go.lua
 local function go_result_type(info)
   local cursor_node = ts_utils.get_node_at_cursor()
-  local scope = ts_locals.get_scope_tree(cursor_node, 0)
 
   local function_node
   for _, v in ipairs(scope) do

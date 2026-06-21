@@ -7,7 +7,6 @@ local d = ls.dynamic_node
 local c = ls.choice_node
 local snippet_from_nodes = ls.sn
 
-local ts_utils = require "nvim-treesitter.ts_utils"
 local get_node_text = vim.treesitter.get_node_text
 
 -- Adapted from https://github.com/tjdevries/config_manager/blob/1a93f03dfe254b5332b176ae8ec926e69a5d9805/xdg_config/nvim/lua/tj/snips/ft/go.lua
@@ -83,18 +82,16 @@ local handlers = {
 
 -- Adapted from https://github.com/tjdevries/config_manager/blob/1a93f03dfe254b5332b176ae8ec926e69a5d9805/xdg_config/nvim/lua/tj/snips/ft/go.lua
 local function go_result_type(info)
-  local cursor_node = ts_utils.get_node_at_cursor()
+  local function_node = vim.treesitter.get_node()
+  while function_node and function_node:type() ~= "function_declaration"
+    and function_node:type() ~= "method_declaration"
+    and function_node:type() ~= "func_literal"
+  do
+    function_node = function_node:parent()
+  end
 
-  local function_node
-  for _, v in ipairs(scope) do
-    if
-      v:type() == "function_declaration"
-      or v:type() == "method_declaration"
-      or v:type() == "func_literal"
-    then
-      function_node = v
-      break
-    end
+  if not function_node then
+    return { t "nil" }
   end
 
   local query = vim.treesitter.query.get("go", "LuaSnip_Result")

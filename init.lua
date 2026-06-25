@@ -45,6 +45,7 @@ vim.diagnostic.config({
 })
 
 -- keymaps
+vim.keymap.set({ "n", "i", "v", "x", "s", "o", "c", "t" }, "<CapsLock>", "<Esc>", { desc = "Use Caps Lock as Escape" })
 vim.keymap.set("v", "<Tab>", ">gv")
 vim.keymap.set("v", "<S-Tab>", "<gv")
 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
@@ -99,7 +100,7 @@ vim.keymap.set("n", "yy", '"+yy')
 vim.keymap.set("x", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("x", "K", ":m '<-2<CR>gv=gv")
 
-require('neoscroll').setup({ mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>'} })
+-- require('neoscroll').setup({ mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>'} })
 
 -- vim.opt.number = true
 vim.opt.relativenumber = true

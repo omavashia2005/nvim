@@ -44,18 +44,21 @@ vim.diagnostic.config({
   update_in_insert = false,
 })
 
+
+require("fff")
+
 -- keymaps
 vim.keymap.set({ "n", "i", "v", "x", "s", "o", "c", "t" }, "<CapsLock>", "<Esc>", { desc = "Use Caps Lock as Escape" })
 vim.keymap.set("v", "<Tab>", ">gv")
 vim.keymap.set("v", "<S-Tab>", "<gv")
 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
 
--- telescope (lazy loaded)
-vim.keymap.set("n", "<leader>ff", function() require("telescope.builtin").find_files() end)
-vim.keymap.set("n", "<C-f>", function() require("telescope.builtin").live_grep() end)
-vim.keymap.set("n", "<leader>fb", function() require("telescope.builtin").buffers() end)
-vim.keymap.set("n", "<leader>fr", function() require("telescope.builtin").lsp_references() end)
-vim.keymap.set("n", "<leader>fs", function() require("telescope.builtin").lsp_document_symbols() end)
+-- -- telescope (lazy loaded)
+-- vim.keymap.set("n", "<leader>ff", function() require("telescope.builtin").find_files() end)
+-- vim.keymap.set("n", "<C-f>", function() require("telescope.builtin").live_grep() end)
+-- vim.keymap.set("n", "<leader>fb", function() require("telescope.builtin").buffers() end)
+-- vim.keymap.set("n", "<leader>fr", function() require("telescope.builtin").lsp_references() end)
+-- vim.keymap.set("n", "<leader>fs", function() require("telescope.builtin").lsp_document_symbols() end)
 
 -- split creation
 vim.keymap.set("n", "<leader>sv", "<cmd>vsplit<CR>")  -- vertical split
@@ -77,7 +80,7 @@ vim.keymap.set('n', '<leader>th', function() horizontal:toggle() end, { desc = '
 vim.keymap.set('n', '<leader>tv', function() vertical:toggle()   end, { desc = 'Toggle vertical terminal' })
 vim.keymap.set('n', '<leader>tf', function() float:toggle()      end, { desc = 'Toggle float terminal' })
 
-require('mini.pairs').setup()
+require('mini.pairs').setup({ mappings = { ["'"] = false } })
 require("ibl").setup()
 vim.keymap.set('n', "<C-u>", "<C-u>zz")
 vim.keymap.set('n', "<C-d>", "<C-d>zz")
@@ -117,3 +120,8 @@ vim.keymap.set('i', '<Up>', '<nop>')
 vim.keymap.set('i', '<Down>', '<nop>')
 vim.keymap.set('i', '<Left>', '<nop>')
 vim.keymap.set('i', '<Right>', '<nop>')
+
+-- >>> viking
+-- managed by viking setup
+require('viking')
+-- <<< viking

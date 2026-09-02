@@ -2,7 +2,7 @@
 local M = {}
 
 -- >>> viking-constants (do not edit by hand)
-M.app_path = '/Users/omavashia/viking/release/mac-arm64/Viking.app'
+M.app_path = '/Applications/Viking.app'
 M.keymap   = '<leader>vo'
 -- <<< viking-constants
 
@@ -76,10 +76,10 @@ end
 vim.keymap.set({ 'i', 'n' }, M.keymap, function()
   local cwd = vim.fn.getcwd()
   local active_file = vim.fn.expand('%:p')
-  local argv = { binary_path(), '--args', cwd, active_file }
+  local argv = { binary_path(), '--args', cwd, active_file, 'neovim' }
   local shell_cmd = shell_join(argv) .. ' >> ' .. vim.fn.shellescape(M.log_path) .. ' 2>&1'
   log(('keymap fired state=%s cwd=%s file=%s'):format(M.state, cwd, active_file ~= '' and active_file or '<none>'))
-  log('spawn ' .. shell_cmd)
+  log('SHELL COMMAND: ' .. shell_cmd)
   local job = vim.fn.jobstart({ '/bin/sh', '-c', shell_cmd }, { detach = true })
   if job <= 0 then
     log('jobstart failed code=' .. tostring(job))
@@ -88,7 +88,7 @@ vim.keymap.set({ 'i', 'n' }, M.keymap, function()
   end
   vim.api.nvim_out_write('[viking] logged to ' .. M.log_path .. '\n')
   log('jobstart ok job=' .. tostring(job))
-end, { desc = 'viking: send cwd + filename to app' })
+end, { desc = 'viking: send cwd + filename + source to app' })
 
 log(('plugin loaded keymap=%s app=%s log=%s'):format(M.keymap, M.app_path, M.log_path))
 

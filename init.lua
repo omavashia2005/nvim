@@ -33,6 +33,16 @@ vim.opt.splitright = true
 vim.opt.hidden = true
 vim.opt.fillchars:append({ eob = " " })
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "python",
+  callback = function()
+    vim.opt_local.expandtab = true
+    vim.opt_local.tabstop = 4
+    vim.opt_local.softtabstop = 4
+    vim.opt_local.shiftwidth = 4
+  end,
+})
+
 -- diagnostics
 vim.diagnostic.config({
   virtual_text = {
@@ -129,8 +139,7 @@ require('viking_overlay')
 require("conform").setup({
   formatters_by_ft = {
     lua = { "stylua" },
-    -- Conform will run multiple formatters sequentially
-    python = { "isort", "black" },
+    python = { "ruff_organize_imports", "ruff_format" },
     -- You can customize some of the format options for the filetype (:help conform.format)
     rust = { "rustfmt", lsp_format = "fallback" },
     -- Conform will run the first available formatter
@@ -153,7 +162,7 @@ vim.keymap.set({ "n", "v" }, "<leader>f", function()
     async = false,
     timeout_ms = 1000,
   })
-end, { desc = "Format file or visual selection with Prettier" })
+end, { desc = "Format file or visual selection" })
 
 local function h(name) return vim.api.nvim_get_hl(0, { name = name }) end
 

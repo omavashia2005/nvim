@@ -2,6 +2,7 @@ local servers =
 	{ 
 		"lua_ls", 
 		"pyright", 
+		"ruff",
 		"gopls", 
 		"ts_ls", 
 		"clangd",  
@@ -44,4 +45,3 @@ return {
     end,
   },
 }
-
